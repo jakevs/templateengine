@@ -34,8 +34,12 @@ function menu() {
         {}, //ask who would you like to create with choices engineer intern or none
       ])
       .then((choice) => {
-        if (choice == "engineer") {
-          addEngineer;
+        switch (key) {
+          case value:
+            break;
+
+          default:
+            break;
         }
       });
   }
