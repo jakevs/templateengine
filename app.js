@@ -9,7 +9,42 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const teamMembers = [];
+const idArray = [];
 
+function menu() {
+  function createManager() {
+    console.log("Please Build Your Team!");
+    inquirer.prompt([{}, {}]).then((answers) => {
+      const manager = new Manager(
+        answers.managerName,
+        answers.managerId,
+        answers.managerEmail,
+        answers.managerOfficeNumber
+      );
+      teamMembers.push(manager);
+      idArray.push(answers.managerId);
+      //createTeam() - this function is going to ask who to create next and then either create intern or engineer
+    });
+  }
+
+  function createTeam() {
+    inquirer
+      .prompt([
+        {}, //ask who would you like to create with choices engineer intern or none
+      ])
+      .then((choice) => {
+        if (choice == "engineer") {
+          addEngineer;
+        }
+      });
+  }
+
+  function buildTeam() {
+    createManager();
+  }
+}
+menu();
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
