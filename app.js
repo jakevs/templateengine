@@ -15,17 +15,69 @@ const idArray = [];
 function menu() {
   function createManager() {
     console.log("Please Build Your Team!");
-    inquirer.prompt([{}, {}]).then((answers) => {
-      const manager = new Manager(
-        answers.managerName,
-        answers.managerId,
-        answers.managerEmail,
-        answers.managerOfficeNumber
-      );
-      teamMembers.push(manager);
-      idArray.push(answers.managerId);
-      //createTeam() - this function is going to ask who to create next and then either create intern or engineer
-    });
+    inquirer
+      .prompt([
+        {
+          name: "employeeName",
+          message: "Please enter employee name: ",
+          validate: validateName,
+        },
+        {
+          name: "employeeId",
+          message: "Please enter employee id: ",
+          validate: validateId,
+        },
+        {
+          name: "employeeEmail",
+          message: "Please enter employee email: ",
+          default: "mail@mail.com",
+          validate: validateEmail,
+        },
+        {
+          type: "list",
+          name: "employeeType",
+          message: "Who would you like to enter first?",
+          choices: ["Manager", "Engineer", "Intern"],
+        },
+        {
+          name: "officeNumber",
+          message: "Please enter office phone number",
+          when: function (answers) {
+            return answers["employeeType"] === "Manager";
+          },
+        },
+
+        {
+          name: "gitHub",
+          message: "Please enter gitHub account id",
+          when: function (answers) {
+            return answers["employeeType"] === "Engineer";
+          },
+        },
+        {
+          name: "school",
+          message: "Please enter school",
+          when: function (answers) {
+            return answers["employeeType"] === "Intern";
+          },
+        },
+        {
+          type: "confirm",
+          name: "again",
+          message: "Would you like to enter more employees?",
+        },
+      ])
+      .then((answers) => {
+        const manager = new Manager(
+          answers.managerName,
+          answers.managerId,
+          answers.managerEmail,
+          answers.managerOfficeNumber
+        );
+        teamMembers.push(manager);
+        idArray.push(answers.managerId);
+        //createTeam() - this function is going to ask who to create next and then either create intern or engineer
+      });
   }
 
   function createTeam() {
