@@ -119,11 +119,11 @@ function validateEmail(email) {
   const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   return reg.test(email) || "Please enter a valid email";
 }
+main();
 // function buildTeam() {
 //   createManager();
 // }
 
-main();
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
