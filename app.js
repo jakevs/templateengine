@@ -18,18 +18,18 @@ function menu() {
     inquirer
       .prompt([
         {
-          name: "employeeName",
-          message: "Please enter employee name: ",
+          name: "managerName",
+          message: "Please enter manager's name: ",
           validate: validateName,
         },
         {
-          name: "employeeId",
-          message: "Please enter employee id: ",
+          name: "managerId",
+          message: "Please enter manager's id: ",
           validate: validateId,
         },
         {
-          name: "employeeEmail",
-          message: "Please enter employee email: ",
+          name: "managerEmail",
+          message: "Please enter manager's email: ",
           default: "mail@mail.com",
           validate: validateEmail,
         },
@@ -40,7 +40,7 @@ function menu() {
           choices: ["Manager", "Engineer", "Intern"],
         },
         {
-          name: "officeNumber",
+          name: "managerOfficeNumber",
           message: "Please enter office phone number",
           when: function (answers) {
             return answers["employeeType"] === "Manager";
@@ -86,7 +86,7 @@ function menu() {
         {}, //ask who would you like to create with choices engineer intern or none
       ])
       .then((choice) => {
-        switch (key) {
+        switch (answers.employeeType) {
           case value:
             break;
 
@@ -95,10 +95,22 @@ function menu() {
         }
       });
   }
-
-  function buildTeam() {
-    createManager();
+  function validateId(id) {
+    const reg = /^\d+$/;
+    return reg.test(id) || "ID should be a number!";
   }
+
+  function validateName(name) {
+    return name !== "" || "Please enter Name";
+  }
+
+  function validateEmail(email) {
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return reg.test(email) || "Please enter a valid email";
+  }
+  // function buildTeam() {
+  //   createManager();
+  // }
 }
 menu();
 // Write code to use inquirer to gather information about the development team members,
